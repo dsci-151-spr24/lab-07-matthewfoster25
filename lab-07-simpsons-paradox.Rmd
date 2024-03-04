@@ -147,11 +147,37 @@ This does not support my theory that smokers will have a shorter life expectancy
 -   `age > 44 & age <= 64 ~ "45-64"`
 -   `age > 64 ~ "65+"`
 
+```{r}
+
+Whickham = Whickham %>%
+  mutate(age_cat = cut(age,
+                       breaks = c(0, 44, 64, 85),
+                       labels = c("18-44", "45-64", "65+")))
+
+```
+
 7.  Re-create the visualization depicting the relationship between smoking status and health outcome, faceted by `age_cat`. What changed? What might explain this change? Extend the contingency table from earlier by breaking it down by age category and use it to help your narrative.
 
-```{r, eval=FALSE}
+```{r}
+#| label: smoker_outcome_relationship_2
+#| eval: true
+
+
+ggplot(data = Whickham, aes(y=outcome, fill=smoker)) +
+  geom_bar(position = "fill") +
+  facet_wrap(~age_cat)
+  ggtitle("Distribution of Outcome")
+
+```
+
+**Answer:**
+The previous plot shows that smokers have a higher chance of being dead than non-smokers in each age category. This symbolizes a lower life expectancy.
+
+```{r}
 Whickham %>%
-  count(smoker, age_cat, outcome)
+  count(smoker, age_cat, outcome) %>%
+  group_by(smoker, age_cat)%>%
+  mutate(prop.dead = n/sum(n))
 ```
 
 🧶 ✅ ⬆️ Knit, *commit, and push your changes to GitHub with an appropriate commit message. Make sure to commit and push all changed files so that your Git pane is cleared up afterwards and review the md document on GitHub to make sure you're happy with the final state of your work.*
