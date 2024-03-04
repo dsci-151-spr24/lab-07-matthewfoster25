@@ -11,7 +11,7 @@ link-citations: true
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(eval = FALSE)
+knitr::opts_chunk$set(eval = TRUE)
 ```
 
 ```{r fig.margin = TRUE, eval = TRUE, echo = FALSE}
@@ -72,6 +72,40 @@ There are `r nrow(Whickham)` observations in this dataset. Each observation repr
 3.  How many variables are in this dataset?
     What type of variable is each?
     Display each variable using an appropriate visualization.
+    
+**Answer:**
+There are `r ncol(Whickham)` Variables in the dataset. Both `outcome` and `smoker` are character data that are 2 level factors and `age` is numerical data.
+
+```{r}
+#| label: whickham_outcome
+#| eval: true
+
+
+ggplot(data = Whickham, aes(y=outcome, fill=outcome)) +
+  geom_bar() +
+  ggtitle("Distribution of Outcome")
+
+```
+
+```{r}
+#| label: whickham_smoker
+#| eval: true
+
+ggplot(data = Whickham, aes(y=smoker, fill=smoker)) +
+  geom_bar() +
+  ggtitle("Distribution of Smoker")
+
+```
+
+```{r}
+#| label: whickham_age
+#| eval: true
+
+ggplot(data = Whickham, aes(x=age, fill=age)) +
+  geom_density() +
+  ggtitle("Distribution of Smoker")
+
+```
 
 4.  What would you expect the relationship between smoking status and health outcome to be?
 
@@ -92,7 +126,7 @@ Whickham %>%
 
 7.  Re-create the visualization depicting the relationship between smoking status and health outcome, faceted by `age_cat`. What changed? What might explain this change? Extend the contingency table from earlier by breaking it down by age category and use it to help your narrative.
 
-```{r}
+```{r, eval=FALSE}
 Whickham %>%
   count(smoker, age_cat, outcome)
 ```
