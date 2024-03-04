@@ -117,9 +117,29 @@ I expect smokers to have a much shorter expected lifespan.
 5.  Create a visualization depicting the relationship between smoking status and health outcome. Briefly describe the relationship, and evaluate whether this meets your expectations. Additionally, calculate the relevant conditional probabilities to help your narrative. Here is some code to get you started:
 
 ```{r}
-Whickham %>%
-  count(smoker, outcome)
+#| label: smoker_outcome_relationship
+#| eval: true
+
+
+ggplot(data = Whickham, aes(y=outcome, fill=smoker)) +
+  geom_bar(position = "fill") +
+  ggtitle("Distribution of Outcome")
+
 ```
+
+```{r}
+#| label: smoking_outcome_relationship
+#| eval: true
+
+
+Whickham %>%
+  count(smoker, outcome) %>%
+  group_by(smoker) %>%
+  mutate(prop.dead = n/sum(n))
+```
+
+**Answer:**
+This does not support my theory that smokers will have a shorter life expectancy as there are more smokers alive after 20 years than non-smokers.
 
 6.  Create a new variable called `age_cat` using the following scheme:
 
